@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier {{itinerary.name}}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/updateItinerary.js') }}" defer></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTF1YkHLhu-ami5vuu4x0HyQ1Zhrirq0Q&callback=initMap&libraries=places"></script>
+{% endblock %}
+
+{% block body %}
+    <span style="display : none" id="itineraryId" data-id="{{itinerary.id}}"></span>
+    {{ include('itinerary/_form.html.twig', {'button_label': 'Terminer les modifications'}) }}
+{% endblock %}
+

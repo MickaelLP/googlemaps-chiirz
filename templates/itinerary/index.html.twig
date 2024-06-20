@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Itinerary index{% endblock %}
+
+{% block body %}
+
+        <div class="user__favorite user__favorite--created">
+            <h1 class="title title--h2">Mes routes de la soif</h1>
+            <a href="{{ path('app_itinerary_new') }}" class="btn btn--primary">Créer une nouvelle route</a>
+            {% for itinerary in itineraries %}
+                {% if itinerary.fkUser.id == app.user.id %}
+                    <a class="user__favorite__itiner-container__card" href="{{ path('app_itinerary_show', {'id': itinerary.id}) }}">
+                        <img class="user__favorite__itiner-container__card__img-bar" src="{{ itinerary.bar['steps'][0]['img'][0] }}" alt="{{ itinerary.name }}"/>
+                        <div class="user__favorite__itiner-container__card__desc">
+                            <h3 class="title title--h4">{{ itinerary.name }}</h3>
+                            <div class="user__favorite__itiner-container__card__row p p--16">
+                                <div>{{ itinerary.bar.numberOfSteps }} Étapes</div>
+                                <div class="user__favorite__itiner-container__card__row__rate">
+                                    <img src="{{ asset('img/svg/star.svg') }}" alt="☆">
+                                    <div>
+                                        {% if itinerary.views != null %}
+                                            {{ itinerary.views }}
+                                        {% else %}
+                                            0
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="user__favorite__itiner-container__card__row">
+                                <div>{{ itinerary.distance }}</div>
+                                <div class="user__favorite__itiner-container__card__row__views">
+                                    <img src="{{ asset('img/svg/views.svg') }}" alt="vue">
+                                    <div>
+                                        {% if itinerary.views != null %}
+                                            {{ itinerary.views }}
+                                        {% else %}
+                                            0
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+{% endblock %}

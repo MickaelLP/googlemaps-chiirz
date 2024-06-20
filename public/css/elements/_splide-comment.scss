@@ -1,0 +1,255 @@
+#parcours {
+    margin-top : 3rem;
+}
+
+#slide__comment {
+    width : 100%;
+}
+
+#slide__comment .splide__arrow .splide__arrow--next {
+    display : none;
+}
+.parcours-info .splide button {
+    display : none;
+}
+
+#slide_comment-list {
+    display : flex;
+    gap : 1rem;
+}
+
+#slide_comment-list li {
+    width : calc(410%) !important;
+    // width : calc(120%) !important;
+    background : $white-gray;
+    border : 1px $white-grayer solid;
+    padding : 1.5rem 2rem;
+    height:160px;
+    border-radius : 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    
+    &::-webkit-scrollbar {
+    display: none;
+    }
+
+    @media (min-width: 1080px) {
+        width : calc(120%) !important
+      }
+   
+}
+
+#slide_comment-list h4 {
+    font-size : 20px;
+    font-weight : 500;
+}
+
+#slide_comment-list p:first-child {
+    font-size : 1rem;
+}
+
+.parcours-info__rate {
+    display : flex;
+    justify-content: space-between;
+    width : 150px;
+    align-items : center;
+
+    &__p {
+        &--ouvert {
+            color : $valid;
+        }
+        &--fermee {
+            color : $error;
+        }
+    }
+    &__star {
+        display : flex;
+        gap : 0.5rem;
+        font-weight : 500;
+        align-items : center;
+        & img {
+            width : 20px;
+            height : 20px;
+            object-fit: contain;
+        }
+    }
+    &__opinion {
+        color : $p-grey;
+        font-weight : 400;
+        font-size : 16px;
+        &::before {
+            content : '( ';
+        }
+        &::after {
+            content : ' )';
+        }
+    }
+}
+
+.section-parcours__big-splide {
+    & .splide__arrow--prev {
+        opacity: 1;
+        background-color: $white;
+        border-radius: 40px;
+        width: 6rem;
+        padding: 1.2rem;
+        transform: translateX(-2rem);
+
+        & svg {
+            fill: $black;
+            width: 24px;
+        }
+
+    }
+    & .splide__arrow--next {
+        background-color: $violet;
+        top: inherit;
+        bottom: .5rem !important;
+        width: fit-content;
+        border-radius: 40px;
+        font-size: 1.2rem;
+        padding: 2rem 3rem;
+        opacity: 1;
+        font-family: 'Chillax';
+
+        &:before {
+            content: 'Beuverie suivante';
+            color: $white;
+            font-weight: 500 ;
+        }
+
+        &:after {
+            content: '';
+            height: 32px;
+            width: 32px;
+            background-image: url('/img/beer.png');
+            background-size: cover;
+            margin-left: 1rem;
+        }
+
+        & svg {
+            display: none;
+        }
+    }
+}
+
+// .parcours-info__opening {
+//     color : $valid;
+// }
+
+.section-parcours__content {
+    padding : 0.5rem;
+    display : flex;
+    justify-content: space-between;
+    flex-direction: column;
+    @media (min-width: 1080px) {
+        flex-direction : row;
+      }
+}
+
+.divContent {
+    width : 100%;
+    @media (min-width: 1080px) {
+        width : 55%;
+      }
+    
+}
+
+.section-parcours__content__splide {
+    width : 100%;
+    @media (min-width: 1080px) {
+        width :42%;
+      }
+       
+    & li {
+        border-radius : 40px;
+        overflow: hidden;
+        height : 500px;
+        @media (min-width: 1080px) {
+            height : 700px;
+          }
+        
+    }
+    &  img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+
+    & .splide__pagination {
+        position : static;
+        display : flex;
+        gap : 0.2rem;
+        height : 30px;
+        & button {
+            background:black;
+        }
+    }
+
+    & .splide__arrow {
+        display : none;
+        &--ltr {
+            display : none;
+        }
+        &--prev {
+            display : none;
+        }
+    }
+}
+
+
+
+.parcours-info {
+    display : flex;
+    flex-direction : column;
+    gap : 1.5rem;
+    
+
+    &__step-index {
+        display : flex;
+        flex-direction: column;
+        gap : 0.8rem;
+
+        & .newDistance {
+            font-weight : 500;
+        }
+        &__of {
+            color : gray;
+        }     
+    }
+    
+    &__phone {
+        text-decoration : none;
+        color : $black;
+        font-weight : 500;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    &__name {
+        display : flex;
+        align-items : center;
+        gap : 0.7rem;
+        text-decoration : none;
+        color : $black;
+        & img {
+            fill : $p-grey;
+        }
+    }
+}
+
+.comment__stars {
+    display : flex;
+    gap : 0.5rem;
+    align-items : center;
+    & img {
+        width : 20px;
+        height : 20px;
+        object-fit: contain;
+    }
+}
+

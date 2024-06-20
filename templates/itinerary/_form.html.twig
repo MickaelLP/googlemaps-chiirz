@@ -1,0 +1,74 @@
+
+{# ************************* Header de la page #}
+<header class="header-new">
+        <div>
+            <h1 class="title title--h1"> Créer une route de la soif sur </h1>
+            {{ form_widget(form.fk_city) }}
+        </div>
+        
+    <div class="header-new__img-container">
+        <img src="{{ asset('img/monster.png') }}" alt="">
+    </div>
+</header>
+
+{# ************************* API MAPS #}
+<span data-user="{{ app.user.id }}" data-city="{{ asset('img/cityRandom.jpg') }}" data-link="{{asset('img/svg/location.svg')}}" data-pin="{{ asset('img/beer_border.png') }}" id="linkToPosImg" aria-hidden="true" style="display: none;"></span>
+
+{# <li class='new__bar-input__prop__list__item'>
+    <div class='new__bar-input__prop__list__item__name'>
+        " + name + "
+    </div>
+    <div class='new__bar-input__prop__list__item__address'>
+        <img src='" + linkToPosImg + "' alt=''>
+        <div>
+            " + locationArray[i] + "
+        </div>
+        <div class='new__bar-input__prop__list__item__address__add'>+</div>
+    </div>
+</li> #}
+
+{# ************************* Section #}
+<section class="new">
+    <div class="new__map" id="newMap" height="200" width="200"></div>
+    <div class="new__content">
+        <div class="new__content__name">
+            <label class="title title--h4" for="itinerary_name">Nom de la route de la soif</label>
+            {{ form_widget(form.name) }}
+        </div>
+        
+        <div class="new__content__bar-input">
+            <label class="title title--h4" for="barNameInput">Ajouter un bar</label>
+            <div class="new__content__bar-input__prop">
+                <input class="new__content__bar-input__prop__search" type="text" name="bar-input" id="barNameInput" required="required" placeholder="🔍">
+                <ul class="new__content__bar-input__prop__list" id="barList">
+                </ul>
+            </div>
+        </div>
+
+        <div class="new__content__step">
+            <h3 class="title title--h4"> Étapes de la route de la <span> soif </span> </h3>
+            <ul class="new__content__step__list" id="barStepList">
+                {# <li class="new__content__step__list__item">
+                    <div class="new__content__step__list__item__bar">
+                        <div class="new__content__step__list__item__bar__step"></div>
+                        <div class="new__content__step__list__item__bar__name"></div>
+                    </div>
+                    <div>
+                        <button class="p p--16" id="deleteBarBtn">Supprimer</button>
+                    </div>
+                </li> #}
+            </ul>
+        </div>
+
+        <div class="new__content__text">
+            <label class="title title--h4" for="itinerary_text">Description</label>
+            {{ form_widget(form.text) }}
+        </div>
+        
+        <p class="new__content__distance">Distance totale : <span id="newDistance">0.0 km</span></p>
+        <button class="btn btn--primary" id="sendBtn">{{ button_label|default('Terminer') }}</button>
+    </div>
+</section>
+
+
+

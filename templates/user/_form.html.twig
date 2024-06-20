@@ -1,0 +1,28 @@
+
+<div class="form__container-row">
+    <div class="form__container-row__row">
+        {{ form_errors(form.pseudo) }}
+        {{ form_label(form.pseudo) }}
+        {{ form_widget(form.pseudo, {'attr': {'class': 'form__row__item form__row__item--select'}})}}
+    </div>
+    <div class="form__container-row__row">
+        {{ form_errors(form.fk_city) }}
+        {{ form_label(form.fk_city) }}
+        {{ form_widget(form.fk_city, {'attr': {'class': 'form__row__item form__row__item--select'}})}}
+    </div>
+</div>
+<div class="form__row">
+    {{ form_errors(form.email) }}
+    {{ form_label(form.email) }}
+    {{ form_widget(form.email, {'attr': {'class': 'form__row__item form__row__item--select'}})}}
+</div>
+<div class="form__row">
+    {{ form_errors(form.password) }}
+    {{ form_label(form.password) }}
+    {{ form_widget(form.password, {'attr': {'class': 'form__row__item form__row__item--select'}})}}
+</div>
+<button class="btn btn--primary">{{ button_label|default('Inscription') }}</button>
+    
+
+{# {{ form_start(form) }}
+{{ form_end(form) }} #}

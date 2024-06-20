@@ -1,0 +1,20 @@
+{
+  "name": "chiirz",
+  "version": "1.0.0",
+  "description": "Chiirz",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.unistra.fr/balu/chiirz.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@splidejs/splide": "^4.1.4",
+    "@splidejs/splide-extension-auto-scroll": "^0.5.3",
+    "sass": "^1.59.3"
+  }
+}

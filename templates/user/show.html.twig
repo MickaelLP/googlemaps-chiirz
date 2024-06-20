@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <section class="user">
+        <header class="user__header">
+            <div class="user__header__heading">
+                <img src="{{ asset('img/confetti.png') }}" alt="">
+                <div class="title title--h3">Profil du fêtard</div>
+            </div>
+            <div class="user__header__profil">
+                <img src="{{ asset('img/login-smiley.png') }}" alt="{{ user.pseudo }}" class="user__header__user">
+                <h3 class="title title--h3">{{ user.pseudo }}</h3>
+                {% if app.user.id == user.id %}
+                    <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="user__header__alter">Modifier mon profil</a>
+                {% endif %}
+            </div>
+            <div class="user__header__register-date">
+                Membre depuis le <span> {{ user.registered | date('d/m/20y', 'Europe/Paris',  'fr_FR')}} </span>
+            </div>
+            <div class="user__header__city">
+                <img src="{{ asset('img/city-night.png') }}" alt="">
+                <div class="user__header__city__text">
+                    <div class="user__header__city__text user__header__city__text--comrad">Camarade de</div>
+                    <div class="user__header__city__text user__header__city__text--city">{{ user.fkCity.name }}</div>
+                </div>
+            </div>
+            <div class="user__header__btn">
+                <a href="{{ path('app_itinerary_new') }}" class="btn btn--primary">Créer une route de la soif</a>
+                <a href="{{ path('city_from_user', {'id': user.fkCity.id}) }}" class="btn btn--secondary">Trouver une route</a>
+            </div>
+
+            <div class="user__header__logout-delete">
+                {% if app.user.id == user.id or is_granted('ROLE_ADMIN') %}
+                {{ include('user/_delete_form.html.twig') }}
+                {% if app.user.id == user.id %}
+                    <a href="{{ path('logout') }}" class="user__header__logout-delete__alter">Deconnexion</a>
+                {% endif %}
+            {% endif %}
+
+            </div>
+            
+        </header>
+
+        <div class="user__favorite">
+            <h2 class="title title--h3">Routes de la soif favorites </h2>
+            {% for l in user.likes %}
+                <a class="user__favorite__itiner-container__card" href="{{ path('app_itinerary_show', {'id': l.fkItinerary.id}) }}">
+                    <img class="user__favorite__itiner-container__card__img-bar" src="{{ l.fkItinerary.bar['steps'][0]['img'][0] }}" alt="{{ l.fkItinerary.name }}"/>
+                    <div class="user__favorite__itiner-container__card__desc">
+                        <h3 class="title title--h4">{{ l.fkItinerary.name }}</h3>
+                        <div class="user__favorite__itiner-container__card__row p p--16">
+                            <div>{{ l.fkItinerary.bar.numberOfSteps }} Étapes</div>
+                            <div class="user__favorite__itiner-container__card__row__rate">
+                                <img src="{{ asset('img/svg/star.svg') }}" alt="☆">
+                                <div>
+                                    {% if l.fkItinerary.views != null %}
+                                        {{ l.fkItinerary.views }}
+                                    {% else %}
+                                        0
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="user__favorite__itiner-container__card__row">
+                            <div>{{ l.fkItinerary.distance }}</div>
+                            <div class="user__favorite__itiner-container__card__row__views">
+                                {% if l.fkItinerary.views != null %}
+                                    {{ l.fkItinerary.views }}
+                                {% else %}
+                                    0
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </section>
+
+{% endblock %}

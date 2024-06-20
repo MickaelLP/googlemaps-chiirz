@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les routes{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/city.js') }}" defer></script>
+{% endblock %}
+
+{# {% block header %}
+    {% include 'partials/_nav.html.twig' %}
+{% endblock %} #}
+
+{% block body %}
+    <header class="header-itinerer">
+        <div class="header-itinerer__div">
+            <div>
+                <h1 class="title title--h1"> Les routes de la soif de </h1>
+                <form id="redirectCity">
+                    <select class="title title--h1" id="city-select" name="city">
+                        <option value="{{ city.id }}">{{ city.name }}</option>
+                        {% for c in cities %}
+                            {% if c.id != city.id %}
+                                <option value="{{ c.id }}">{{ c.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+            <div class="header-itinerer__div__button-wrapper">
+                <a href="{{ path('app_itinerary_new')}}" class="header-itinerer__button-wrapper__button btn btn--primary-bis">Créer une route</a>
+                <form id="redirectOrder" method="POST">
+                <div>
+                    <label for="order-select">Trier par</label>
+                    <select class="header-itinerer__button-wrappe__select" id="order-select" name="order" data-asc="1">
+                        {% if order == 'views' %}
+                            <option value="views">Vues</option>
+                            <option value="id">Nouveautés</option>
+                            <option value="name">Titre</option>
+                        {% elseif order == 'id' %}
+                        <option value="id">Nouveautés</option>
+                            <option value="views">Vues</option>
+                            <option value="name">Titre</option>
+                        {% elseif order == 'name' %}
+                            <option value="name">Titre</option>
+                            <option value="views">Vues</option>
+                            <option value="id">Nouveautés</option>
+                        {% endif %}
+                    </select>
+                </div>
+                    {% if isAsc is null or isAsc == true %}
+                    <input type="hidden" id="ordering" name="ascOrDesc" data-value="DESC" value="ASC" style="display : none;">
+                        <button id="ascOrDesc">
+                                <img src="{{ asset('img/svg/asc.svg') }}" alt="desc">
+                        </button>
+                    {% else %}
+                        <input type="hidden" id="ordering" name="ascOrDesc" data-value="ASC" value="DESC" style="display : none;">
+                        <button id="ascOrDesc">
+                            <img src="{{ asset('img/svg/desc.svg') }}" alt="asc">
+                        </button>
+                    {% endif %}
+                </form>
+                {# <form action="{{ app.request.uri }}" class="header__button-wrapper__select" method="POST" id="orderBySelect">
+                    <label for="order-select">Trier par</label>
+                    <select id="order-select" name="order">
+                        {% for c in cities %}
+                        <option value="{{ c.id }}">{{ c.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Submit</button>
+                    <img src="{{ asset('img/svg/drop-down.svg') }}" alt=""/>
+                </form> #}
+            </div>
+        </div>
+
+        <div class="header-itinerer__img-container">
+            <img src="{{ asset('img/rocket.png') }}" alt="">
+        </div>
+    </header>
+
+    <section class="itiner-container">
+            {% for itinerary in itineraries %}
+                <a class="itiner-container__card" href="{{ path('itinerary_show', {'id': itinerary.id}) }}">
+                    <img class="itiner-container__card__img-bar" src="{{ itinerary.bar['steps'][0]['img'][0] }}" alt="{{ itinerary.name }}">
+                    <div class="itiner-container__card__desc">
+                        <h3 class="title title--card">{{ itinerary.name }}</h3>
+                        <div class="itiner-container__card__row ">
+                            <div>{{itinerary.bar["numberOfSteps"]}} Étapes</div>
+                            <div class="itiner-container__card__row__rate">
+                                <img src="{{ asset('img/svg/star.svg') }}" alt="☆">
+                                <div>
+                                    {{ itinerary.bar["avgRate"] }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="itiner-container__card__row">
+                            <div>{{ itinerary.distance }}</div>
+                            <div class="itiner-container__card__row__views">
+                                <img src="{{ asset('img/svg/views.svg') }}" alt="vue">
+                                <div>
+                                {% if itinerary.views != null %}
+                                    {{ itinerary.views }}
+                                {% else %}
+                                    0
+                                {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+    </section>
+    </main>
+{% endblock %}

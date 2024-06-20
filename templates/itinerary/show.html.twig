@@ -1,0 +1,178 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ itinerary.name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/splide.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/splide.min.js') }}" defer></script>
+    <script>
+        const starImage = "{{ asset('img/svg/star.svg') }}";
+    </script>
+    <script src="{{ asset('js/itinerary.js') }}" defer></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTF1YkHLhu-ami5vuu4x0HyQ1Zhrirq0Q&callback=initMap&libraries=places"></script>
+{% endblock %}
+
+{% block body %}
+    <section class="section-itinerary" {% if app.user %} data-user="{{ itinerary.fkUser.id }}" data-itinerary="{{ itinerary.id }}" id="dataset" {% endif %}>
+        <div class="section-itinerary__maps" id="itineraryMap" data-city="{{ itinerary.fkCity.id }}">
+            {# Intégration Google Maps #}
+        </div>
+        
+        <div class="section-itinerary__content">
+            <div class="section-itinerary__content__creator">
+                <img src="{{ asset('img/glowing-star.png') }}" alt="☆">
+                <p>Route de la soif imaginé par <a href="{{ path('user', { 'id': itinerary.fkuser.id }) }}" class="section-itinerary__content__creator__link">{{ itinerary.fkuser.pseudo }}</a></p>
+            </div>
+            <h1 class="title title--h2">{{ itinerary.name }}</h1>
+            {% if app.user and (is_granted('ROLE_ADMIN') or app.user.id == itinerary.fkUser.id) %}
+                <div class="section-itinerary__content__admin">
+                    {{ include('itinerary/_delete_form.html.twig') }}
+                    <a href="{{ path('app_itinerary_edit', {'id': itinerary.id }) }}" class="btn">Modifier</a>
+                </div>
+            {% endif %}
+            <div class="section-itinerary__content__rate">
+                <div class="section-itinerary__content__rate__rating">
+                    <img src="{{ asset('img/svg/star.svg') }}" alt="☆">
+                    <div>
+                        {{ itinerary.bar['avgRate'] }}
+                    </div>
+                </div>
+                <div class="section-itinerary__content__rate__views">
+                    <img src="{{ asset('img/svg/views.svg') }}" alt="vue">
+                    <div>
+                    {% if itinerary.views != null %}
+                        {{ itinerary.views }}
+                    {% else %}
+                        0
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% if itinerary.text is not empty %}
+                <p class="section-itinerary__content__paragraph">{{ itinerary.text }}</p>
+            {% endif %}
+
+            <div class="section-itinerary__content__buttons">
+                <a href="#parcours" class="section-itinerary__content__buttons__btn btn btn--primary-bis">
+                    <div>C'est parti !</div>
+                    <img src="{{ asset('img/tongue-smiley.png') }}" alt="😝">
+                </a>
+                <a href="" id="linkGoogleMap" target="__blank" class="section-itinerary__content__buttons__btn btn btn--secondary-bis">
+                    <div>Ouvrir sur Google Maps</div>
+                    <img src="{{ asset('img/svg/external_links.svg') }}" alt="↗">
+                </a>
+            </div>
+            {% set haveLiked = false %}
+            {% for like in itinerary.likes %}
+                {% if like.fkUser.id == app.user.id %}
+                    {% set haveLiked = true %}
+                    <div class="section-itinerary__content__like fav--active" data-state="0" data-id="{{ like.id }}" id="favParent">
+                        <img src="{{ asset('img/heart.png') }}" alt="♡" id="addTofavorites">
+                        <div id="addToFavorites">Supprimer des favoris</div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            {% if haveLiked == false %}
+                <div class="section-itinerary__content__like" data-state="1" data-id="" id="favParent">
+                    <img src="{{ asset('img/heart.png') }}" alt="♡" id="addToFavorites">
+                    <div id="addToFavorites">Ajouter aux favoris</div>
+                </div>
+            {% endif %}
+            <div class="section-itinerary__content__steps">
+                <h3 class="title title--h4">{{ itinerary.bar['numberOfSteps'] }}{# {{ itinerary.bar.numberOfSteps }} #} Étapes</h3>
+                <ol>
+                    {% for s in itinerary.bar['steps'] %}
+                        <li> <span> {{loop.index}}. </span>{{ s.name }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+            <p class="section-itinerary__content__distance">Longeur du parcours : <span class="section-itinerary__content__distance__number">{{ itinerary.distance }}</p>
+        </div>
+    </section>
+
+
+    {# //////////////////////////////PARCOURS/////////////////////////// #}
+    <section class="section-parcours" id="parcours">
+        <div class="section-parcours__progress-bar">
+        </div>
+ 
+        <div id="carouselSteps" class="splide section-parcours__big-splide">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    {% for s in itinerary.bar['steps'] %}
+                        <li class="splide__slide">
+                            <div class="section-parcours__content" >
+                                <div class="section-parcours__content__splide splide" aria-label="Images de : {{ s['name'] }}" id="splidePics">
+                                    <div class="splide__track">
+                                        <ul class="splide__list">
+                                            {% for img in s['img'] %}
+                                                <li class="splide__slide"><img src="{{ img }}" alt="{{ s['name'] }}"></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                {# Repart à 0 sur la notation bem sinon trop long #}
+                                <div class="parcours-info divContent">
+                                    <div class="parcours-info__length" id="parcoursLength">
+                                        
+                                    </div>
+                                    {# Nombre d'étape #}
+                                    <div class="parcours-info__step-index">
+                                        <p class="newDistance"></p>
+                                        <p  class="title title--h2 "> Étape <span>{{ loop.index }}</span> <span class="parcours-info__step-index__of stepIndex">/{{ itinerary.bar['numberOfSteps'] }}</span> </p>
+                                    </div>
+                                    <a href="#" class="parcours-info__name stepName">
+                                        <h3 class="title title--h4">
+                                            {{ s['name'] }}
+                                        </h3>
+                                        <img src="{{ asset('img/svg/external_links.svg') }}" alt="">
+                                    </a>
+                                    {# Numéro de téléphone #}
+                                    <a href="tel:" class="parcours-info__phone stepPhone"></a>
+                                     <div class="parcours-info__rate" id="stepRate">
+                                        <div class="parcours-info__rate__star">
+                                            <img src="{{ asset('img/svg/star.svg') }}" alt="☆">
+                                            {# Note moyenne du bar #}
+                                            <div class="stepRateNumber"></div>
+                                        </div>
+                                        {# Nombre d'avis #}
+                                        <div class="parcours-info__rate__opinion stepOpinion"></div>
+                                    </div>
+                                    
+                                    {# <div class="parcours-info__price" id="stepPrice">{{itinerary.bar["avgPrice"]}}</div> #}
+                                    <div class="parcours-info__opening">
+                                        {# Info Ouvert ou fermé et heure d'ouverture Ouvert ● Lundi : 18h00-23h00 #}
+                                        <p class="parcours-info__rate__opening__tag stepIsOpen"></p>
+                                    </div>
+                                    {# <div class="parcours-info__container-com">
+                                        <div class="parcours-info__container-com__item">
+                                            <div class="parcours-info__container-com__item__head">
+                                                <div class="parcours-info__container-com__item__head__name" id="commentName"></div>
+                                                <div class="parcours-info__container-com__item__head__rate" id="commentDate">
+                                                    <img src="{{ asset('img/svg/star_color.svg') }}" alt="☆" data-index="{{ loop.index }}">
+                                                    <img src="{{ asset('img/svg/star_color.svg') }}" alt="☆" data-index="{{ loop.index }}">
+                                                    <img src="{{ asset('img/svg/star_color.svg') }}" alt="☆" data-index="{{ loop.index }}">
+                                                    <img src="{{ asset('img/svg/star_color.svg') }}" alt="☆" data-index="{{ loop.index }}">
+                                                    <img src="{{ asset('img/svg/star_color.svg') }}" alt="☆" data-index="{{ loop.index }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> #}
+                                    
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    {# Test google API #}
+    <div id="carte" height="200" width="200"></div>
+{% endblock %}

@@ -1,0 +1,102 @@
+.register {
+    display : flex;
+    align-items : center;
+    flex-direction : column; 
+    gap : 3rem; 
+    justify-content:center; 
+    min-height : 100vh;
+    margin-top : 6rem;
+
+    @media (min-width: 560px) {
+        margin-top : 8rem;
+    }
+
+    @media (min-width: 768px) {
+        height : 100vh;
+        justify-content : space-between;
+        flex-direction: row;
+        gap : 0;
+        margin-top : 0;
+    }
+
+    &__content {
+        width : 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;  
+
+        @media (min-width: 768px) {
+            width : 45%;
+        }
+        
+        & h1 {
+            text-align : center; 
+            width : 120%;
+
+            @media (min-width: 768px) {
+                text-align: left;
+            }
+        }
+
+        & .btn {
+            align-self : center;
+
+            @media (min-width: 768px) {
+                align-self : flex-start;
+            }
+        }
+
+      
+    }
+
+    & img {
+        width : 75%;
+
+        @media (min-width: 768px) {
+            width : 50%;
+        }
+    }
+
+    & input, select {
+        background-color : $white-gray;
+        border-radius : 40px;
+        padding : 1rem;
+
+        @media (min-width: 768px) {
+            padding : 1.3rem 1rem;
+        }
+    }
+}
+
+
+.form__container-row {
+    display : flex;
+    gap : 1rem;
+    justify-content : space-between;
+    flex-direction : column;
+
+    @media (min-width: 1080px) {
+        flex-direction : row;
+    }
+
+    &__row {
+        display : flex;
+        flex-direction : column;
+        gap : 0.6rem;
+        width : 100%;
+        @media (min-width: 1080px) {
+            width : 50%;
+        }
+      
+
+        & input, select {
+            padding : 1.3rem 1rem;
+        }
+    }
+}
+
+.form__row {
+    display : flex;
+    flex-direction : column;
+    gap : 0.6rem;
+}

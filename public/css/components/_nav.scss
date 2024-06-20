@@ -1,0 +1,209 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+
+  @media (min-width: 1080px) {
+    top: 70px;
+  }
+
+  @media (min-width: 1280px) {
+    width: 85%;
+  }
+
+  @media (min-width: 1920px) {
+    width: 70%;
+  }
+
+  &__content-nav {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    align-items: center;
+
+    @media (min-width: 1080px) {
+      width: 100%;
+      flex-direction: row;
+      gap: 3rem;
+    }
+
+    & a {
+      text-decoration: none;
+      color: $p-grey;
+      font-family: "Chillax", sans-serif;
+      font-weight: 600;
+    }
+
+    & ul {
+      display: none;
+
+      @media (min-width: 1080px) {
+        list-style-type: none;
+        font-weight: 600;
+        display: flex;
+        gap: 1.8rem;
+        margin-top: 15px;
+      }
+
+      @media (min-width: 1280px) {
+        gap: 1.5rem;
+      }
+    }
+
+    & img[alt="logo de Chiirz"] {
+      width: 40%;
+
+      @media (min-width: 768px) {
+        width: 30%;
+      }
+
+      @media (min-width: 1080px) {
+        width: 23%;
+      }
+    }
+
+    & img[alt="burger-menu"] {
+      display: inline-block;
+      width: 23%;
+      cursor: pointer;
+      @media (min-width: 768px) {
+        width: 15%;
+      }
+      @media (min-width: 1080px) {
+        display: none;
+      }
+    }
+  }
+
+  &__content-btn {
+    display: none;
+
+    @media (min-width: 1080px) {
+      width: 35%;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    & a {
+      text-decoration: none;
+      color: $black;
+    }
+
+    & .btn {
+      padding: 0.75rem 2rem;
+    }
+  }
+
+  &__content-online {
+    display: none;
+    @media (min-width: 1080px) {
+      display: block;
+    }
+
+    & a {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      text-decoration: none;
+      gap: 1rem;
+
+      & div {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+
+        & p {
+          color: $p-grey;
+          font-size: 0.8rem;
+        }
+        & p + p {
+          font-family: "Chillax Variable", sans-serif;
+          font-weight: 600;
+          font-size: 1.25rem;
+          color: $black;
+        }
+      }
+
+      & img {
+        width: 25%;
+      }
+    }
+  }
+
+  &__sidebar {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 100%;
+    z-index: 999;
+    background-color: $white;
+    padding: 4rem;
+    transition: all ease-in-out 0.3s;
+
+    & li {
+      padding: 1rem 0;
+
+    }
+
+    & a {
+      font-family: "Chillax", sans-serif;
+      font-weight: 600;
+      font-size: 1.5rem;
+      color: $black;
+      margin-bottom: 1rem;
+      text-decoration: none;
+    }
+
+    &__content-btn {
+      margin-top: 2rem;
+    
+      & a {
+        font-size: 1rem;
+        color: $p-grey;
+      }
+
+    }
+
+    &__content-online {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      font-family: 'Chillax';
+
+      & p {
+        color: #555555;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      & p:nth-child(2) 
+      {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: $black;
+      }
+
+      & img {
+        width: 4rem;
+      }
+    }
+
+    &__close {
+      cursor: pointer;
+    }
+
+    &--active {
+      left: 0;
+    }
+  }
+}

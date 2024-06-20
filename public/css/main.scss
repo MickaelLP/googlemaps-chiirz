@@ -1,0 +1,55 @@
+/*
+    Utils
+*/
+@import "./utils/reset.css";
+
+/*
+    Fonts
+*/
+@import "base/fonts";
+
+/*
+    Base
+*/
+@import "base/container";
+
+/*
+    Variables
+*/
+
+$green: #b1ef42;
+$violet: #a77fee;
+$black: #000000;
+$white: #ffffff;
+$valid: #397e35;
+$error: #c82f2a;
+$p-grey: #555555;
+$white-gray: #f8f8f8;
+$white-grayer: #d9d9d9;
+$violet2: #c5a7fc;
+$violet3: #cebbf0;
+$violet4: #eee8fa;
+
+/*  
+    Base components
+*/
+
+@import "components/footer";
+@import "components/nav";
+@import "components/what-section";
+@import "components/hero";
+@import "components/header";
+@import "components/itinerer";
+@import "components/login";
+@import "components/register";
+@import "components/users";
+@import "components/itinary-detail";
+@import "components/new-itinary";
+/*
+    Elements
+*/
+
+@import "elements/btn";
+@import "elements/splide";
+@import "elements/itinerer-card";
+@import "elements/splide-comment";

@@ -1,0 +1,150 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link href="{{ asset('css/splide.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/splide.min.js') }}" defer></script>
+    <script src="{{asset('js/splide-extension-auto-scroll.min.js')}}"></script>
+    <script src="{{asset('js/home.js')}}" defer > </script>
+{% endblock %}
+
+{% block header %}
+    <header class="header header--home header--all">
+        {% include 'partials/_nav.html.twig' %}
+
+        <section class="hero">
+            <div class="hero__text">
+                <h1 class="title title--h1"> Prêt à te <br> mettre une <br> <span> mine </span> ? </h1>
+                <p class="p p--16"> Prêt à explorer les meilleures adresses de Lyon, Paris ou Strasbourg 
+                    pour une soirée (un peu trop) arrosée ? 
+                    Trouve les  tournées de bars qui feront chavirer ton palais ou construis ton itinéraire de beuverie mémorable avec notre site ! </p>
+                <div class="hero__text__btn">
+                    <a href="{{ path('app_itinerary_new') }}" class="btn btn--primary"> Créer une route de la soif </a>
+                    {# Liens vers Trouver un itinéraire #}
+                    {% if app.user %}
+                        <a href="{{ path('app_city_show', {id : app.user.fkCity.id}) }}"  class="btn btn--secondary"> Trouver un itinéraire </a>
+                    {% else %}
+                        <a href="{{ path('homepage') }}#choose" class="btn btn--secondary"> Trouver un itinéraire </a>
+                    {% endif %}
+                </div>
+        
+                <img src="{{ asset('img/happy-smiley.png') }}">
+            </div>
+        
+            <div class="hero__img">
+                <img class="hero__img__beer "src="{{ asset('img/hero-beer.png') }}">
+            </div>
+        </section>
+    </header> 
+{% endblock %}
+
+{% block body %}
+
+<section class="splide-section" id="choose"> 
+    <h2 class="title title--h2"> Choisis ta ville </h2>
+    <div id="carousel" class="splide splide-home" aria-labelledby="carousel-heading">
+        <img class="splide-home__ball splide-home__ball--green" src="{{ asset('img/green-ball.png') }}" alt="">
+        <img class="splide-home__ball splide-home__ball--violet" src="{{ asset('img/violet-ball.png') }}" alt="">
+        <div class="splide__track">
+            <ul class="splide__list splide-home__list">
+                <li class="splide__slide splide-home__slide">
+                    <a href="{{ path('app_city_show', {'id': 2}) }}" class="splide__slide splide-home__slide__a splide-home__slide__a--lyon "> 
+                        <img src="{{ asset('img/lyon.jpg') }}" alt="Voir les tournées de bar de Lyon">
+                        <div>
+                            <h3> Lyon </h3>
+                            <p> La ville des bouchons et des bars animés </p>
+                        </div>
+                    </a>
+                </li>
+                <li class="splide__slide splide-home__slide">
+                    <a href="{{ path('app_city_show', {'id': 1}) }}" class="splide__slide splide-home__slide__a splide-home__slide__a--paris "> 
+                        <img src="{{ asset('img/paris.jpg') }}" alt="Voir les tournées de bar de Paris">
+                        <div>
+                            <h3> Paris </h3>
+                            <p> Paris regorge de bars chaleureux et branchés </p>
+                        </div>
+                    </a>
+                </li>
+                <li class="splide__slide splide-home__slide">
+                    <a href="{{ path('app_city_show', {'id': 3}) }}" class="splide__slide  splide-home__slide__a splide-home__slide__a--lyon  "> 
+                        <img src="{{ asset('img/strasbourg.jpg') }}" alt="Voir les tournées de bar de Strasbourg">
+                        <div>
+                            <h3> Strasbourg </h3>
+                            <p> Découvrez ses bars authentiques et conviviaux </p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="what-section" id="what">
+    <h2 class="title title--h2"> <strong> Chiirz </strong> c'est quoi ? </h2>
+    <p class="p p--16"> Permettez-moi de vous présenter Skoll, une entreprise qui propose de vous aider à trouver les meilleurs bars dans les villes de Paris, Lyon et Strasbourg. En utilisant notre plateforme, vous pouvez planifier votre itinéraire de soirée, découvrir les dernières tendances de la vie nocturne et trouver des endroits sympas pour sortir avec vos amis. En outre, notre site répertorie également les paris dans ces villes, pour les amateurs de jeux de hasard. Avec Skoll, vous êtes sûr de passer une soirée inoubliable !</p>
+    <h3 class="title title--h3"> Autrement dit c'est </h3>
+    <div class="what-section__articles-content">
+        <article >
+            <img src="{{ asset('img/beers.png') }}">
+            <p class="p p--24 "> {{ itineraryCount }} <br> Itinéraires </p>
+        </article>
+
+        <article>
+            <img src="{{ asset('img/monkey.png') }}">
+            <p class="p p--24 "> {{ itineraryViews }} <br> Vues </p>
+        </article>
+
+        <article>
+            <img src="{{ asset('img/reallyhappy-smiley.png') }}">
+            <p class="p p--24 "> {{ userCount }} <br> Inscrits </p>
+        </article>
+
+        <article>
+            <img src="{{ asset('img/stareyes-smiley.png') }}">
+            <p class="p p--24 "> Bref un site <br> <span> (presque) </span> parfait </p>
+        </article>
+    </div>
+</section>
+
+<script> 
+    //////////////////Gestion animation png en hover home-page
+    //////
+
+    //selection des articles
+    const tabArticle = document.querySelectorAll(".what-section__articles-content article");
+     //selection des img actuelles
+    const tabImg = document.querySelectorAll(".what-section__articles-content article img");
+
+    //Définition des url de non animées
+    const oldUrls = [
+          "{{ asset('img/beers.png') }}",
+          "{{ asset('img/monkey.png') }}",
+            "{{ asset('img/reallyhappy-smiley.png') }}",
+            "{{ asset('img/stareyes-smiley.png') }}"
+            ];
+
+     //définition des url animées
+    const newUrls = [
+          "{{ asset('img/beers-animated.png') }}",
+          "{{ asset('img/monkey-animated.png') }}",
+            "{{ asset('img/reallyhappy-smiley-animated.png') }}",
+            "{{ asset('img/stareyes-smiley-animated.png') }}"
+            ];
+
+    //quand la souris est sur l'article, déclenchement png animé
+    for (let i=0; i<tabArticle.length; i++) {
+        tabArticle[i].addEventListener("mouseover", function(){
+            tabImg[i].setAttribute('src', newUrls[i]);
+            });
+    }
+
+    //quand la souris quitte l'article, arrêt du png animé
+    for (let i=0; i<tabArticle.length; i++) {
+        tabArticle[i].addEventListener("mouseout", function(){
+            tabImg[i].setAttribute('src', oldUrls[i]);
+            });
+    }
+</script>
+
+{% endblock %}

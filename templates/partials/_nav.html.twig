@@ -1,0 +1,89 @@
+{# Connasse de side bar #}
+<div class="nav__sidebar" id="nav">
+    <img src="{{ asset('img/svg/close.svg') }}" class="nav__sidebar__close" alt="close-menu" id="closeMenu">
+
+    {% if app.user %}
+    <a href="{{ path('user', {'id': app.user.id }) }}" class="nav__sidebar__content-online">
+        <img src="{{ asset('img/happy-smiley.png') }}">
+        <div>
+            <p> Bonjour à toi !</p>
+            <p> {{ app.user.pseudo }} </p>
+        </div>
+    </a>
+    {% else %}
+    <a href="{{ path('login') }}" class="nav__sidebar__content-online">
+        <p> Bien le bonjour ! </p>
+    </a>
+    {% endif %}
+    
+    <ul class="p p-20">
+        <li> 
+            <a href="{{ path('home') }}">Accueil</a>
+        </li>
+        <li> 
+            {% if app.user %}
+                <a href="{{ path('app_city_show', {id : app.user.fkCity.id}) }}">Tous les itinéraires </a>
+            {% else %}
+                <a href="{{ path('app_city_show', {id : 1}) }}">Tous les itinéraires </a>
+            {% endif %}
+        </li>
+    </ul>
+
+    <div class="nav__sidebar__content-btn p p--16">
+            {% if app.user %}
+                <a href="#"> Se déconnecter </a>
+            {% else %}
+            <a href="{{ path('login') }}" >Se connecter </a>
+            <a href="{{ path('register') }}" class="btn btn--secondary">S'inscrire </a>     
+            {% endif %}   
+    </div>
+</div>
+<div class="nav">
+    
+
+    <div class="nav__content-nav">
+        <img src="{{ asset('img/logo.png') }}" alt="logo de Chiirz">
+
+        <img src="{{ asset('img/svg/responsive-menu-btn.svg') }}" alt="burger-menu" id="burgerMenu">
+
+        <ul class="p p-20">
+            <li> 
+                <a href="{{ path('home') }}">Accueil</a>
+            </li>
+            <li> 
+                {% if app.user %}
+                    <a href="{{ path('app_city_show', {id : app.user.fkCity.id}) }}">Tous les itinéraires </a>
+                {% else %}
+                    <a href="{{ path('homepage') }}#choose">Tous les itinéraires </a>
+                {% endif %}
+            </li>
+            {# Version connectée, ajout li deconnexion #}
+            <li> 
+                {% if app.user %}
+                    <a href="{{ path('logout')}}"> Se déconnecter </a>
+                {% endif %}
+            </li>
+        </ul>
+        {% if app.user %}
+            {# Version connectée #}
+            <div class="nav__content-online">
+                <a href="{{ path('user', {'id': app.user.id }) }}">
+                    <img src="{{ asset('img/happy-smiley.png') }}">
+                    <div>
+                        <p> Bonjour à toi !</p>
+                        <p> {{ app.user.pseudo }} </p>
+                    </div>
+                </a>
+            </div>
+        {% else %}
+            {# Version déconnecté #}
+            <div class="nav__content-btn p p--16">
+                <a href="{{ path('login') }}" >Se connecter </a>
+                <a href="{{ path('register') }}" class="btn btn--secondary">S'inscrire </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+</nav>
+
+

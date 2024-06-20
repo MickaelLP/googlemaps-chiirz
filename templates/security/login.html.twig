@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<section class="login">
+    <div class="login__content">
+        <h1 class="title title--h1">Connexion</h1>
+        <form method="post" class="login__login-form">
+            {% if error %}
+                <div class="login__login-form__error error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+        
+            {% if app.user %}
+                <script defer>
+                    window.open('/user/{{ app.user.id }}', '_self');
+                </script>
+            {% else %}
+                <div>
+                    <label for="inputPseudo" class="login__login-form__label">Pseudo</label>
+                    <input type="text" value="{{ last_username }}" name="pseudo" id="inputPseudo" class="login-form__input" autocomplete="username" required autofocus>
+                </div>
+                
+                <div>
+                    <label for="inputPassword" class="login__login-form__label">Mot de passe</label>
+                    <input type="password" name="password" id="inputPassword" class="login-form__input" autocomplete="current-password" required>
+                </div>
+                
+            
+                <label>
+                    <input type="checkbox" class="login__login-form__remember" name="_remember_me">Se souvenir de moi
+                </label>
+                
+                
+                <input type="hidden" name="_csrf_token"
+                    value="{{ csrf_token('authenticate') }}"
+                >
+                <button class="login__login-form__login btn btn--primary" type="submit">
+                    Se connecter
+                </button>
+            {% endif %}
+        </form>
+    </div>
+    <img src="{{ asset('img/login-smiley.png')}}" alt="">
+</section>
+
+{% endblock %}

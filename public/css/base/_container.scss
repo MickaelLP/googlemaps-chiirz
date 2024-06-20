@@ -1,0 +1,22 @@
+.container {
+    width : 85%;
+    margin : auto;
+    padding-top : 1.6rem;
+
+    @media (min-width: 1440px) {
+        width : 70%;
+    }
+
+    @media (min-width: 1920px) {
+        width : 65%;
+    }
+}
+
+body, html {
+    min-height : 100vh; 
+    scroll-behavior: smooth;
+}
+
+body {
+    position : relative;
+}

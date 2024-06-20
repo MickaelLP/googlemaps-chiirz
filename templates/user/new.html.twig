@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New User{% endblock %}
+
+{% block body %}
+    {% if app.user %}
+        <script defer>
+            window.open('/user/{{ app.user.id }}', '_self');
+        </script>
+    {% else %}
+        <section class="register">
+            <div class="register__content">
+                <h1 class="title title--h2">Rejoins nous ! </h1>
+                {{ include('user/_form.html.twig') }}
+            </div>
+            <img src="{{ asset('img/smile-smiley.png')}}" alt="">
+        </section>
+    {% endif %} 
+{% endblock %}

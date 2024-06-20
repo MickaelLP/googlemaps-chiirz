@@ -1,0 +1,35 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+homepage:
+    path: /
+    controller: App\Controller\StaticPages::index
+
+itinerary_index:
+    path: /itinerary
+    controller: App\Controller\ItineraryController::index
+
+login:
+    path: /login
+    controller: App\Controller\LoginFormController::index
+
+logout:
+    path: /logout
+    controller: App\Controller\LoginFormController::index
+
+register:
+    path: /user/new
+    controller: App\Controller\UserController::index
+  
+user :
+    path: /user/{id}
+    controller: App\Controller\UserController::index
+  
+city_from_user :
+  path: /city/{id}
+  controller: App\Controller\CityController::index
+
+itinerary_show :
+    path: itinerary/{id}
+    controller: App\Controller\ItineraryController::index 
+    

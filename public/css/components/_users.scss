@@ -1,0 +1,196 @@
+.user {
+    display : flex;
+    flex-direction : column;
+    margin-top : 10rem;
+    overflow-y : hidden;
+    gap : 3rem;
+  
+    @media (min-width: 1080px) { //990 si pas d'img dans l'iti
+        flex-direction : row;
+        justify-content : space-between;
+        gap : 0;
+    }
+
+    //////////////////////////////////////
+    &__header {
+        width : 100%;
+        display : flex;
+        flex-direction : column;
+        gap : 1.8rem;
+
+        @media (min-width: 1080px) {
+            width : 50%;
+        }
+
+        &__heading {
+            display : flex;
+            gap : 0.5rem;
+            & img {
+                width : 15%;
+            }
+        }
+
+        &__profil {
+            display : flex;
+            flex-direction: column;
+            gap : 0.5rem;
+            & img {
+                width : 300px;
+                height : 300px;
+                object-fit: cover;
+            }
+            & a {
+                color : $p-grey;
+                text-decoration : none;
+                // font-weight : 600;
+                &:hover {
+                    text-decoration:underline;
+                }
+            }
+        }
+
+        &__register-date {
+            color : $p-grey;
+            & span {
+                font-weight: bolder;
+            }
+        }
+
+        &__city {
+            display : flex;
+            gap : 1rem;
+            align-items : center;
+            & img {
+                width : 15%;
+            }
+            &__text {
+                display : flex;
+                flex-direction: column;
+                gap : 0.3rem;
+                &--city {
+                    font-family : "Chillax", sans-serif;
+                    font-weight : 700;
+                    font-size : 1.5rem;
+                }
+            }    
+        }
+
+        &__btn {
+            display : flex;
+            flex-direction : column;
+            gap : 0.7rem;
+            @media (min-width: 1080px) {
+                flex-direction : row;
+                gap : 1rem;
+            }
+        }
+
+        &__logout-delete {
+            display : flex;
+            flex-direction: column;
+            gap : 0.2rem;
+            margin-top : 1rem;
+
+            & form button {
+                background-color : transparent;
+                color : $error;
+                font-family: 'Plus Jakarta Sans';
+                cursor : pointer;
+                &:hover {
+                    font-weight: 600;
+                }
+            }
+            &__alter {
+                text-decoration : none;
+                &:hover {
+                    text-decoration : underline;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    //////////////////////////////////////
+    &__favorite {
+        width : 100%;
+        display : flex;
+        flex-direction:column;
+        gap:2rem;
+
+        @media (min-width: 1080px) {
+            width : 40%;
+            overflow-y : scroll;
+            height : 800px;
+
+            &::-webkit-scrollbar {
+                display: none;
+              }
+        }
+
+        &__itiner-container {
+            display : flex;
+            flex-direction : column;
+            gap : 1.5rem;
+            color : $black;
+            text-decoration : none;
+
+            &__card {
+                width : 100%;
+                background-color : $white-gray;
+                border : 1px $white-grayer solid;
+                padding : 1rem;
+                display : flex;
+                flex-direction : row;
+                gap : 1.5rem;
+                text-decoration : none;
+                color : $black;
+                border-radius : 40px;
+
+                &__img-bar {
+                    width : 40%;
+                    height : 280px;
+                    object-fit: cover;
+                    border-radius : 30px;
+                }
+
+                &__desc {
+                    display : flex;
+                    flex-direction: column;  
+                    gap : 2rem;
+                    justify-content : center;
+                    width : 100%;
+                }
+
+                &__row {
+                    display : flex;
+                    justify-content : space-between;
+                    color : $p-grey;
+                    font-weight : 500;
+                    font-size : 1.3rem; 
+        
+                    &__rate {
+                        display : flex;
+                        gap : 0.5rem;
+                        align-items : center;
+        
+                        & img {
+                            height : 1.2rem;
+                        }
+                    }
+        
+                    &__views {
+                        display : flex;
+                        gap : 1rem;
+                    }
+                }
+            }
+        }
+
+        &--created {
+            width: 100% !important;
+            height : 100%;
+            overflow: visible;
+            margin-top: 12rem;
+        }
+    }
+}

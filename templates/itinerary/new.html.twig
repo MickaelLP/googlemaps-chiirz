@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% if not app.user %}
+    {% do app.request.redirect('/') %}
+{% endif %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/newItinerary.js') }}" defer></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTF1YkHLhu-ami5vuu4x0HyQ1Zhrirq0Q&callback=initMap&libraries=places"></script>
+{% endblock %}
+
+{% block title %}Nouvelle route{% endblock %}
+
+{% block body %}
+
+    {{ include('itinerary/_form.html.twig') }}
+
+    
+{% endblock %}
